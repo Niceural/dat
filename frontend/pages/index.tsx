@@ -50,8 +50,8 @@ const Homepage = () => {
             assets<br />
             tag
           </h1>
-          <p style={{ fontSize: 24 }}>
-            Tokenizing ...... tbd
+          <p style={{ fontSize: 36 }}>
+            Digitizing receipts using NFT and RFID tag
           </p>
         </div>
       </div>
