@@ -16,6 +16,7 @@ fn pause() {
     stdin().read(&mut [0]).unwrap();
 }
 
+/*
 fn prepend_file<P: AsRef<Path>>(data: &[u8], file_path: &P) -> io::Result<()> {
     // Create a temporary file 
     let mut tmp_path = Temp::new_file()?;
@@ -34,6 +35,7 @@ fn prepend_file<P: AsRef<Path>>(data: &[u8], file_path: &P) -> io::Result<()> {
     fs::rename(&tmp_path, &file_path)?;
     Ok(())
 }
+*/
 
 fn main() {
     println!("Create asset application started...");
@@ -49,7 +51,6 @@ fn main() {
     let mut nft_metadata_file = args[2].clone();
     nft_metadata_file.push_str(".json");
     pause();
-/*
 
     println!("Checking tznft installation...");
     Command::new("tznft")
@@ -174,7 +175,21 @@ fn main() {
         .expect("Failed to mint token.");
     pause();
 
+    println!("Transferring the NFT to the customer...");
+    Command::new("tznft")
+        .current_dir("./tznft-cli")
+        .arg("transfer")
+        .arg("--nft")
+        .arg(&collection_name)
+        .arg("--signer")
+        .arg("alice")
+        .arg("--batch")
+        .arg("alice, bob, 1")
+        .spawn()
+        .expect("Failed to transfer the nft.");
+
     // reading the contract address
+    let token_id = String::from("1");
     let config_file = String::from("./tznft-cli/tznft.json");
     let mut config = {
         let text = std::fs::read_to_string(&config_file).unwrap();
@@ -185,7 +200,8 @@ fn main() {
         _ => panic!("Could not read address from \"tznft.json\""),
     };
     println!("NFT address read from \"tznft.json\": {}", &nft_address);
-    
+    pause();
+
     // write address to arduino sketch
     let mut line_to_write = String::from("byte blockData1 [16] = {\"");
     line_to_write.push_str(&nft_address[0..16]);
@@ -193,7 +209,9 @@ fn main() {
     line_to_write.push_str(&nft_address[16..32]);
     line_to_write.push_str("\"};byte blockData3 [16] = {\"");
     line_to_write.push_str(&nft_address[32..36]);
-    line_to_write.push_str("------------\"};\n");
+    line_to_write.push_str("------------\"};byte blockData4 [16] = {\"");
+    line_to_write.push_str(&token_id);
+    line_to_write.push_str("---------------\"};\n");
     println!("Line to write to arduino sketch: {}", &line_to_write);
     let original_file_path = "./arduino/writeRfid/writeRfid.ino";
     let original_content: String = fs::read_to_string(&original_file_path)
@@ -207,7 +225,7 @@ fn main() {
     temp.write(&original_content.as_bytes()).expect("Failed to write to file");
     fs::remove_file(&original_file_path).expect("Failed to remove file");
     fs::rename(&temp_file_path, &original_file_path).expect("Failed to rename file");
-*/
+    pause();
 
     println!("Compiling arduino sketch...");
     Command::new("arduino-cli")

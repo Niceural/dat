@@ -1,4 +1,4 @@
-byte blockData1 [16] = {"KT1LLsFFR8nRxFsy"};byte blockData2 [16] = {"r1UdP9W1DNuvCv3b"};byte blockData3 [16] = {"Xy8C------------"};
+byte blockData1 [16] = {"KT1AeB5gNT9XNAb7"};byte blockData2 [16] = {"Q9tLa5RjprA9AQoi"};byte blockData3 [16] = {"NB8K------------"};byte blockData4 [16] = {"1---------------"};
 #include <SPI.h>
 #include <MFRC522.h>
 
@@ -18,6 +18,7 @@ MFRC522::MIFARE_Key key;
 int blockNum1 = 1;
 int blockNum2 = 2;
 int blockNum3 = 4;
+int blockNum4 = 5;
 
 /* Create an array of 16 Bytes and fill it with data */
 /* This is the actual data which is going to be written into the card */
@@ -123,7 +124,7 @@ void loop()
      Serial.write(readBlockData[j]);
    }
    Serial.print("\n");
-   
+
    //---------- block 3
    /* Call 'WriteDataToBlock' function, which will write data to the block */
    Serial.print("\n");
@@ -141,6 +142,30 @@ void loop()
    Serial.print("\n");
    Serial.print("Data in Block:");
    Serial.print(blockNum3);
+   Serial.print(" --> ");
+   for (int j=0 ; j<16 ; j++)
+   {
+     Serial.write(readBlockData[j]);
+   }
+   Serial.print("\n");
+
+   //---------- block 4
+   /* Call 'WriteDataToBlock' function, which will write data to the block */
+   Serial.print("\n");
+   Serial.println("Writing to Data Block...");
+   WriteDataToBlock(blockNum4, blockData4);
+   
+   /* Read data from the same block */
+   Serial.print("\n");
+   Serial.println("Reading from Data Block...");
+   ReadDataFromBlock(blockNum4, readBlockData);
+   /* If you want to print the full memory dump, uncomment the next line */
+   mfrc522.PICC_DumpToSerial(&(mfrc522.uid));
+   
+   /* Print the data read from block */
+   Serial.print("\n");
+   Serial.print("Data in Block:");
+   Serial.print(blockNum4);
    Serial.print(" --> ");
    for (int j=0 ; j<16 ; j++)
    {
