@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/font": "^13.0.5",
+    "@taquito/beacon-wallet": "^14.1.0",
     "@taquito/taquito": "^14.1.0",
     "@taquito/tzip12": "^14.1.0",
     "@tzkt/sdk-api": "^1.0.1",
