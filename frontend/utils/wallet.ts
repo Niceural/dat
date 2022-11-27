@@ -1,13 +1,15 @@
-// TODO 2.a - Setup beacon wallet instance
 import { BeaconWallet } from "@taquito/beacon-wallet";
 
-const wallet = new BeaconWallet({
-  name: "Digital Assets Tag",
-  // @ts-ignore
-  preferredNetwork: "ghostnet",
-});
+const initBeaconWallet = () => {
+  return new BeaconWallet({
+    name: "Digital Assets Tag",
+    // @ts-ignore
+    preferredNetwork: "ghostnet",
+  })
+}
 
-// TODO 2.b - Setup connectWallet function (on ghostnet)
+let wallet = initBeaconWallet()
+
 export const connectWallet = async () => {
   await wallet.requestPermissions({
     network: {
@@ -17,7 +19,6 @@ export const connectWallet = async () => {
   });
 };
 
-// TODO 2.c - Setup getAccount function
 export const getAccount = async () => {
   const activeAccount = await wallet.client.getActiveAccount();
   if (activeAccount) {
@@ -28,5 +29,5 @@ export const getAccount = async () => {
 };
 
 export const disconnectWallet = async () => {
-  return await wallet.disconnect()
+  return await wallet.clearActiveAccount()
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router';
 import useUserContext from './UserContext';
@@ -79,10 +79,19 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     )
   }
 
+  const renderBgLogo = () => {
+    return (
+      <div style={{ position: 'fixed', zIndex: 1, right: '-25%', top: 0 }}>
+        <img src="/logo-white.svg" style={{ height: '110vh' }} />
+      </div>
+    )
+  }
+
   return (
     <div className="bg" style={{
       height: '100vh',
     }}>
+      {renderBgLogo()}
       {renderNav()}
       <div style={{ position: 'relative', zIndex: 2 }}>
         {children}

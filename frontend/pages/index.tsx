@@ -39,9 +39,16 @@ const Homepage = () => {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-        <div style={{ width: 1360, marginTop: '25vh', textAlign: 'center' }}>
-          <h1 style={{ fontWeight: 'normal', fontSize: 60 }}>
-            Digital Assets Tag
+        <div style={{ width: 1360, marginTop: '18vh', textAlign: 'left' }}>
+          <h1 style={{
+            fontWeight: 'normal',
+            fontSize: 110,
+            lineHeight: 1,
+            marginBottom: 36,
+          }}>
+            digital<br />
+            assets<br />
+            tag
           </h1>
           <p style={{ fontSize: 24 }}>
             Tokenizing ...... tbd
