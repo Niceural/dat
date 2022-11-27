@@ -102,6 +102,7 @@ DAT (Digital Assets Tag) helps consumers who want to reduce environmental waste 
 
 * [![Next][Next.js]][Next-url]
 * [![React][React.js]][React-url]
+* [![Arduino][Arduino]][Arduino-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -151,6 +152,10 @@ DAT architecture includes 2 main components - a frontend App and an Arduino-base
    yarn dev
    ```
 
+### Arduino Environment Setup
+
+
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -169,10 +174,8 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [ ] Build store staff management view
+- [ ] Build mobile app for easier transferring tokens
 
 See the [open issues](https://github.com/Niceural/dat/issues) for a full list of proposed features (and known issues).
 
@@ -210,20 +213,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
-
 Project Link: [https://github.com/Niceural/dat](https://github.com/Niceural/dat)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* []()
-* []()
-* []()
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -248,3 +238,5 @@ Project Link: [https://github.com/Niceural/dat](https://github.com/Niceural/dat)
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
+[Arduino]: https://img.shields.io/badge/arduino-00979c?style=for-the-badge&logo=arduino&logoColor=white
+[Arduino-url]: https://www.arduino.cc/
