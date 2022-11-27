@@ -19,6 +19,9 @@ const Homepage = () => {
       setTokens([])
       return
     }
+    if (!CONTRACT_ADDRESS) {
+      throw new Error("process.env.NEXT_PUBLIC_CONTRACT_ADDRESS must be provided")
+    }
     (async () => {
       const tokens = await fetch('https://api.tzkt.io/v1/tokens/balances' + "?" + new URLSearchParams({
         account,
