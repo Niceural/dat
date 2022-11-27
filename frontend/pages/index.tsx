@@ -31,6 +31,8 @@ const Homepage = () => {
     })()
   }, [account])
 
+  console.log(tokens)
+
   const renderHero = () => {
     return (
       <div style={{
@@ -81,7 +83,7 @@ const Homepage = () => {
               cursor: 'pointer',
             }}>
               <div style={{ textAlign: 'center' }}>
-                <img style={{ borderRadius: 8, marginBottom: 16, height: 238 }} src={displayUri === "https://github.com/oxheadalpha/nft-tutorial/blob/master/packages/tznft/README.mdNERD_tree_1transfer-tokens" ? 'https://nftcardfrontendmentor.netlify.app/images/equilibrium.jpg' : getImageUrl(displayUri)} />
+                <img style={{ borderRadius: 8, marginBottom: 16, width: '100%', height: 'auto' }} src={displayUri} />
               </div>
               <div style={{ fontSize: 18, fontWeight: 'bold' }}>
                 {name}

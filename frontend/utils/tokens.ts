@@ -1,7 +1,7 @@
 import { TezosToolkit } from '@taquito/taquito'
 import { Tzip12Module, tzip12 } from '@taquito/tzip12';
 
-const Tezos = new TezosToolkit("https://mainnet.api.tez.ie");
+const Tezos = new TezosToolkit("https://ghostnet.tezos.marigold.dev/");
 Tezos.addExtension(new Tzip12Module());
 
 export const readToken = async (contractAddress: string, tokenId: number) => {
