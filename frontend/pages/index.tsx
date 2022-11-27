@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Tilt from 'react-parallax-tilt'
 import getImageUrl from '../utils/getImageUrl';
 import { CONTRACT_ADDRESS } from '../constants/contract'
 import useUserContext from '../components/UserContext'
@@ -56,22 +57,24 @@ const Homepage = () => {
       } = token.metadata
       return (
         <Link href={`/token?contractAddress=${token.contract.address}&tokenId=${token.tokenId}`} key={id}>
-          <div style={{
-            borderRadius: 16,
-            background: 'rgba(255, 255, 255, 0.3)',
-            padding: 16,
-            flex: '0 0 270px',
-            maxWidth: '270px',
-            cursor: 'pointer',
-          }}>
-            <img style={{ width: '100%', borderRadius: 8, marginBottom: 16 }} src={getImageUrl(displayUri)} />
-            <div style={{ fontSize: 18, fontWeight: 'bold' }}>
-              {name}
+          <Tilt tiltMaxAngleX={10} tiltMaxAngleY={10} tiltReverse>
+            <div className="preview-card" style={{
+              borderRadius: 16,
+              background: 'rgba(255, 255, 255, 0.3)',
+              padding: 16,
+              flex: '0 0 270px',
+              maxWidth: '270px',
+              cursor: 'pointer',
+            }}>
+              <img style={{ width: '100%', borderRadius: 8, marginBottom: 16 }} src={getImageUrl(displayUri)} />
+              <div style={{ fontSize: 18, fontWeight: 'bold' }}>
+                {name}
+              </div>
+              <div className="line-clamp">
+                {description}
+              </div>
             </div>
-            <div className="line-clamp">
-              {description}
-            </div>
-          </div>
+          </Tilt>
         </Link>
       )
     })

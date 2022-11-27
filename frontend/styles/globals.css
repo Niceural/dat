@@ -41,3 +41,12 @@ button:hover {
   -webkit-box-orient: vertical;  
   overflow: hidden;
 }
+
+.preview-card {
+  filter: opacity(90%) saturate(90%);
+  transition: all 0.3s;
+}
+
+.preview-card:hover {
+  filter: opacity(100%) saturate(100%);
+}

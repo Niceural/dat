@@ -35,7 +35,7 @@ const Page = () => {
           {!metadata ? "Loading Token metadata..." : (
             <>
               <div style={{ maxWidth: 500, flexShrink: 0 }}>
-                <img style={{ width: '100%' }} src={metadata ? getImageUrl(metadata.displayUri) : ''} alt={metadata?.name} />
+                <img style={{ width: '100%', borderRadius: 24 }} src={metadata ? getImageUrl(metadata.displayUri) : ''} alt={metadata?.name} />
               </div>
               <div>
                 <h1 style={{ fontWeight: 'normal', fontSize: 66, margin: '0 0 16px 0' }}>
