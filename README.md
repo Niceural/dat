@@ -35,7 +35,7 @@
 <h3 align="center">Digital Assets Tag</h3>
 
   <p align="center">
-    Digitizing receipts using NFT and RFID tag
+    Digitizing physical assets using NFT and RFID tag
     <br />
     <a href="https://github.com/Niceural/dat"><strong>Explore the docs »</strong></a>
     <br />

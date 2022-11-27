@@ -51,7 +51,7 @@ const Homepage = () => {
             tag
           </h1>
           <p style={{ fontSize: 36 }}>
-            Digitizing receipts using NFT and RFID tag
+            Digitizing physical assets using NFT and RFID tag
           </p>
         </div>
       </div>
