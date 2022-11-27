@@ -82,7 +82,16 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const renderBgLogo = () => {
     return (
       <div style={{ position: 'fixed', zIndex: 1, right: '-25%', top: 0 }}>
-        <img src="/logo-white.svg" style={{ height: '110vh' }} />
+        <img
+          className='bg-logo'
+          src="/logo-white.svg"
+          style={{
+            height: '110vh',
+            transition: 'all 1.5s ease',
+            filter: account ? 'blur(3px)' : 'blur(0px)',
+            transform: account ? 'scale(1.1)' : 'scale(1)',
+          }}
+        />
       </div>
     )
   }

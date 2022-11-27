@@ -3,7 +3,7 @@ body {
   padding: 0;
   margin: 0;
   min-height: 100vh;
-  overflow: hidden;
+  overflow-y: hidden;
 }
 
 a {
@@ -85,4 +85,8 @@ button.disconnect:hover {
 
 .preview-card:hover {
   filter: opacity(100%) saturate(100%);
+}
+
+.bg-logo {
+  filter: blur(3px);
 }
