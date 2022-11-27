@@ -174,7 +174,6 @@ fn main() {
         .expect("Failed to mint token.");
     pause();
 
-*/
     // reading the contract address
     let config_file = String::from("./tznft-cli/tznft.json");
     let mut config = {
@@ -208,5 +207,29 @@ fn main() {
     temp.write(&original_content.as_bytes()).expect("Failed to write to file");
     fs::remove_file(&original_file_path).expect("Failed to remove file");
     fs::rename(&temp_file_path, &original_file_path).expect("Failed to rename file");
+*/
 
+    println!("Compiling arduino sketch...");
+    Command::new("arduino-cli")
+        .current_dir("./arduino")
+        .arg("compile")
+        .arg("--fqbn")
+        .arg("arduino:avr:uno")
+        .arg("writeRfid")
+        .spawn()
+        .expect("Failed to compile sketch");
+    pause();
+
+    println!("Uploading sketch on arduino...");
+    Command::new("arduino-cli")
+        .current_dir("./arduino")
+        .arg("upload")
+        .arg("-p")
+        .arg("/dev/ttyACM0")
+        .arg("--fqbn")
+        .arg("arduino:avr:uno")
+        .arg("writeRfid")
+        .spawn()
+        .expect("Failed to upload sketch on arduino");
+    pause();
 }

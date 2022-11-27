@@ -75,7 +75,8 @@ void loop()
   Serial.print(F("PICC type: "));
   MFRC522::PICC_Type piccType = mfrc522.PICC_GetType(mfrc522.uid.sak);
   Serial.println(mfrc522.PICC_GetTypeName(piccType));
-         
+
+   //------------- block 1
    /* Call 'WriteDataToBlock' function, which will write data to the block */
    Serial.print("\n");
    Serial.println("Writing to Data Block...");
@@ -86,12 +87,60 @@ void loop()
    Serial.println("Reading from Data Block...");
    ReadDataFromBlock(blockNum1, readBlockData);
    /* If you want to print the full memory dump, uncomment the next line */
-   mfrc522.PICC_DumpToSerial(&(mfrc522.uid));
+   // mfrc522.PICC_DumpToSerial(&(mfrc522.uid));
    
    /* Print the data read from block */
    Serial.print("\n");
    Serial.print("Data in Block:");
    Serial.print(blockNum1);
+   Serial.print(" --> ");
+   for (int j=0 ; j<16 ; j++)
+   {
+     Serial.write(readBlockData[j]);
+   }
+   Serial.print("\n");
+
+   //------------ block 2
+   /* Call 'WriteDataToBlock' function, which will write data to the block */
+   Serial.print("\n");
+   Serial.println("Writing to Data Block...");
+   WriteDataToBlock(blockNum2, blockData2);
+   
+   /* Read data from the same block */
+   Serial.print("\n");
+   Serial.println("Reading from Data Block...");
+   ReadDataFromBlock(blockNum2, readBlockData);
+   /* If you want to print the full memory dump, uncomment the next line */
+   // mfrc522.PICC_DumpToSerial(&(mfrc522.uid));
+   
+   /* Print the data read from block */
+   Serial.print("\n");
+   Serial.print("Data in Block:");
+   Serial.print(blockNum2);
+   Serial.print(" --> ");
+   for (int j=0 ; j<16 ; j++)
+   {
+     Serial.write(readBlockData[j]);
+   }
+   Serial.print("\n");
+   
+   //---------- block 3
+   /* Call 'WriteDataToBlock' function, which will write data to the block */
+   Serial.print("\n");
+   Serial.println("Writing to Data Block...");
+   WriteDataToBlock(blockNum3, blockData3);
+   
+   /* Read data from the same block */
+   Serial.print("\n");
+   Serial.println("Reading from Data Block...");
+   ReadDataFromBlock(blockNum3, readBlockData);
+   /* If you want to print the full memory dump, uncomment the next line */
+   // mfrc522.PICC_DumpToSerial(&(mfrc522.uid));
+   
+   /* Print the data read from block */
+   Serial.print("\n");
+   Serial.print("Data in Block:");
+   Serial.print(blockNum3);
    Serial.print(" --> ");
    for (int j=0 ; j<16 ; j++)
    {
