@@ -6,6 +6,13 @@ body {
   overflow-y: hidden;
 }
 
+::selection {
+  background: rgba(255, 255, 255, 0.3); /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: rgba(255, 255, 255, 0.3); /* Gecko Browsers */
+}
+
 a {
   color: inherit;
   text-decoration: none;
