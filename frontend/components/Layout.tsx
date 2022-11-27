@@ -15,7 +15,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     (async () => {
       const account = await getAccount();
-      console.log('set account', account)
       setAccount(account);
     })();
   }, []);
