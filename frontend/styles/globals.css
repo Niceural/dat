@@ -17,12 +17,29 @@ a {
 
 button {
   transition: all 0.25s;
+  font-size: 16px;
+  border-radius: 10px;
+  padding: 6px 12px;
+  cursor: pointer;
+  color: white;
+  border: none;
   background: rgba(255, 255, 255, 0.3);
   border: 3px solid rgba(255, 255, 255, 0.2);
 }
 
-button:hover {
+button.connect:hover {
   border: 3px solid rgba(255, 255, 255, 0.5);
+}
+
+button.disconnect {
+  margin-left: 12px;
+  background: rgb(245, 145, 127);
+  filter: grayscale(0.1);
+  border: 3px solid rgba(245, 145, 127, 0.3);
+}
+
+button.disconnect:hover {
+  filter: grayscale(0);
 }
 
 @media (prefers-color-scheme: dark) {

@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Tilt from 'react-parallax-tilt'
+import dynamic from 'next/dynamic';
 import getImageUrl from '../utils/getImageUrl';
 import { CONTRACT_ADDRESS } from '../constants/contract'
 import useUserContext from '../components/UserContext'
 import Layout from '../components/Layout'
 
+const Tilt = dynamic(() => import('react-parallax-tilt'), {
+  ssr: false
+})
+
 const Homepage = () => {
   const { account } = useUserContext()
-  console.log('[home] account', account)
   const [tokens, setTokens] = useState<any[]>()
 
   useEffect(() => {

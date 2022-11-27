@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router';
 import useUserContext from './UserContext';
-import { connectWallet, getAccount } from "../utils/wallet";
+import { connectWallet, disconnectWallet, getAccount } from "../utils/wallet";
 
 const getShortenedAddress = (address: string) => {
   return address.substring(0, 4) + '...' + address.substring(address.length - 6, address.length)
 }
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  const { account, setAccount } = useUserContext()
+  const { account, setAccount, reset } = useUserContext()
+  const router = useRouter()
 
   useEffect(() => {
     (async () => {
@@ -59,18 +61,19 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <code style={{ fontFamily: 'monospace', fontSize: 16 }}>
             {getShortenedAddress(account)}
           </code>
-          {/* disconnect button */}
+          <button className='disconnect' style={{
+          }} onClick={() => {
+            reset()
+            disconnectWallet()
+            router.push('/')
+          }}>
+            Disconnect
+          </button>
         </>
       )
     }
     return (
-      <button style={{
-        color: 'white',
-        fontSize: 16,
-        borderRadius: 10,
-        padding: '6px 12px',
-        cursor: 'pointer',
-      }} onClick={onConnectWallet}>
+      <button className='connect' onClick={onConnectWallet}>
         Connect
       </button>
     )

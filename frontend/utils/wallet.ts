@@ -26,3 +26,7 @@ export const getAccount = async () => {
     return "";
   }
 };
+
+export const disconnectWallet = async () => {
+  return await wallet.disconnect()
+}
