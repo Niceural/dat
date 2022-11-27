@@ -23,7 +23,7 @@ const Homepage = () => {
       throw new Error("process.env.NEXT_PUBLIC_CONTRACT_ADDRESS must be provided")
     }
     (async () => {
-      const tokens = await fetch('https://api.tzkt.io/v1/tokens/balances' + "?" + new URLSearchParams({
+      const tokens = await fetch('https://api.ghostnet.tzkt.io/v1/tokens/balances' + "?" + new URLSearchParams({
         account,
         "token.contract": CONTRACT_ADDRESS,
       }).toString()).then(res => res.json())
@@ -81,7 +81,7 @@ const Homepage = () => {
               cursor: 'pointer',
             }}>
               <div style={{ textAlign: 'center' }}>
-                <img style={{ borderRadius: 8, marginBottom: 16, height: 238 }} src={getImageUrl(displayUri)} />
+                <img style={{ borderRadius: 8, marginBottom: 16, height: 238 }} src={displayUri === "https://github.com/oxheadalpha/nft-tutorial/blob/master/packages/tznft/README.mdNERD_tree_1transfer-tokens" ? 'https://nftcardfrontendmentor.netlify.app/images/equilibrium.jpg' : getImageUrl(displayUri)} />
               </div>
               <div style={{ fontSize: 18, fontWeight: 'bold' }}>
                 {name}

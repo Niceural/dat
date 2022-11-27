@@ -8,7 +8,7 @@ const Page = () => {
   const [metadata, setMetadata] = useState<any>()
 
   useEffect(() => {
-    readToken(CONTRACT_ADDRESS, tokenData.tokenId)
+    readToken(CONTRACT_ADDRESS!, tokenData.tokenId)
       .then(setMetadata)
       .catch(alert)
   }, [])
