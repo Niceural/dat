@@ -67,6 +67,7 @@ const Homepage = () => {
         displayUri,
         name,
         description,
+        ownerName,
       } = token.metadata
       return (
         <Link href={`/token?contractAddress=${token.contract.address}&tokenId=${token.tokenId}`} key={id}>
@@ -79,12 +80,17 @@ const Homepage = () => {
               maxWidth: '270px',
               cursor: 'pointer',
             }}>
-              <img style={{ width: '100%', borderRadius: 8, marginBottom: 16 }} src={getImageUrl(displayUri)} />
+              <div style={{ textAlign: 'center' }}>
+                <img style={{ borderRadius: 8, marginBottom: 16, height: 238 }} src={getImageUrl(displayUri)} />
+              </div>
               <div style={{ fontSize: 18, fontWeight: 'bold' }}>
                 {name}
               </div>
               <div className="line-clamp">
                 {description}
+              </div>
+              <div style={{ borderTop: '2px solid rgba(255, 255, 255, 0.5)', marginTop: 20, paddingTop: 12 }}>
+                Owned by: {ownerName || "Bob"}
               </div>
             </div>
           </Tilt>
