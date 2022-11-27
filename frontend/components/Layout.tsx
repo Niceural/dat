@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router';
 import useUserContext from './UserContext';
@@ -80,12 +80,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <div style={{
+    <div className="bg" style={{
       height: '100vh',
-      backgroundImage: 'linear-gradient(to right bottom, #007ec6, #0096d3, #00add9, #00c3d7, #00d7d1, #12e1c9, #36eabd, #58f2ae, #6ef4a5, #81f69d, #93f795, #a4f88d)',
     }}>
       {renderNav()}
-      {children}
+      <div style={{ position: 'relative', zIndex: 2 }}>
+        {children}
+      </div>
     </div>
   );
 };
