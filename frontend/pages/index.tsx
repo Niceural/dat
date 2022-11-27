@@ -1,36 +1,142 @@
 import { useState, useEffect } from 'react'
-import readToken from '../utils/readToken'
+import Link from 'next/link'
+import dynamic from 'next/dynamic';
+import getImageUrl from '../utils/getImageUrl';
 import { CONTRACT_ADDRESS } from '../constants/contract'
-import tokenData from '../misc/tokenData.json'
+import useUserContext from '../components/UserContext'
+import Layout from '../components/Layout'
 
-const Page = () => {
-  const [metadata, setMetadata] = useState<any>()
+const Tilt = dynamic(() => import('react-parallax-tilt'), {
+  ssr: false
+})
+
+const Homepage = () => {
+  const { account } = useUserContext()
+  const [tokens, setTokens] = useState<any[]>()
 
   useEffect(() => {
-    readToken(CONTRACT_ADDRESS, tokenData.tokenId)
-      .then(setMetadata)
-      .catch(alert)
-  }, [])
-
-  const getImageUrl = () => {
-    if (!metadata) {
+    if (!account) {
+      setTokens([])
       return
     }
-    return "https://ipfs.io/ipfs/" + metadata.displayUri.split("ipfs://")[1]
+    (async () => {
+      const tokens = await fetch('https://api.tzkt.io/v1/tokens/balances' + "?" + new URLSearchParams({
+        account,
+        "token.contract": CONTRACT_ADDRESS,
+      }).toString()).then(res => res.json())
+      setTokens(tokens)
+    })()
+  }, [account])
+
+  const renderHero = () => {
+    return (
+      <div style={{
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+        <div style={{ width: 1360, marginTop: '25vh', textAlign: 'center' }}>
+          <h1 style={{ fontWeight: 'normal', fontSize: 60 }}>
+            Digital Assets Tag
+          </h1>
+          <p style={{ fontSize: 24 }}>
+            Tokenizing ...... tbd
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  const renderItems = () => {
+    if (!tokens || tokens.length === 0) {
+      return "No NFTs to show"
+    }
+    return tokens.map(({ token, id }) => {
+      const {
+        displayUri,
+        name,
+        description,
+      } = token.metadata
+      return (
+        <Link href={`/token?contractAddress=${token.contract.address}&tokenId=${token.tokenId}`} key={id}>
+          <Tilt tiltMaxAngleX={10} tiltMaxAngleY={10} tiltReverse>
+            <div className="preview-card" style={{
+              borderRadius: 16,
+              background: 'rgba(255, 255, 255, 0.3)',
+              padding: 16,
+              flex: '0 0 270px',
+              maxWidth: '270px',
+              cursor: 'pointer',
+            }}>
+              <img style={{ width: '100%', borderRadius: 8, marginBottom: 16 }} src={getImageUrl(displayUri)} />
+              <div style={{ fontSize: 18, fontWeight: 'bold' }}>
+                {name}
+              </div>
+              <div className="line-clamp">
+                {description}
+              </div>
+            </div>
+          </Tilt>
+        </Link>
+      )
+    })
+    // return Array.from({ length: 5 }).map((_, index) => {
+    //   const {
+    //     name,
+    //     tokenId,
+    //     imageUrl,
+    //     description,
+    //   } = {
+    //     name: `Item #${index}`,
+    //     tokenId: index + 1,
+    //     imageUrl: 'https://nftcardfrontendmentor.netlify.app/images/equilibrium.jpg',
+    //     description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    //   }
+    //   return (
+    //     <div key={index} style={{
+    //       borderRadius: 16,
+    //       background: 'rgba(255, 255, 255, 0.3)',
+    //       padding: 16,
+    //       flexBasis: '270px',
+    //     }}>
+    //       <div>
+    //         <img style={{ width: '100%', borderRadius: 8, marginBottom: 16 }} src={imageUrl} />
+    //         <div style={{ fontSize: 18, fontWeight: 'bold' }}>
+    //           {name}
+    //         </div>
+    //         <p>
+    //           {description}
+    //         </p>
+    //       </div>
+    //     </div>
+    //   )
+    // })
   }
 
   return (
-    <div style={{ display: 'flex', padding: 20 }}>
-      {!metadata ? "Loading Token metadata..." : (
-        <>
-          <img src={getImageUrl()} alt={metadata?.name} />
-          <code style={{ whiteSpace: 'pre-wrap', fontSize: 20, padding: 20 }}>
-            {metadata && JSON.stringify(metadata, null, 2)}
-          </code>
-        </>
+    <Layout>
+      {!account ? renderHero() : (
+        <div style={{
+          paddingTop: 92,
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          overflow: 'scroll',
+          height: '100vh',
+        }}>
+          <div style={{ width: 1360, marginTop: 36 }}>
+            <p style={{ fontSize: 28 }}>
+              Owned NFTs
+            </p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, paddingBottom: 120 }}>
+              {renderItems()}
+            </div>
+          </div>
+        </div>
       )}
-    </div>
+    </Layout>
   )
 }
 
-export default Page
+export default Homepage
