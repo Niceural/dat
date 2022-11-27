@@ -39,6 +39,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         height: '92px',
         backdropFilter: 'blur(24px)',
         backgroundColor: 'rgba(0, 0, 0, 0)',
+        zIndex: 1000,
       }}>
         <div style={{ width: 1360, display: 'flex', alignItems: 'center' }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>

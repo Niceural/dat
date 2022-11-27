@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import Head from 'next/head'
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { UserContext } from '../components/UserContext'
@@ -23,6 +24,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       setAccount,
       reset
     }}>
+      <Head>
+        <link rel="icon" type="image/x-icon" href="/favicon.png" />
+      </Head>
       <style jsx global>{`
         * {
           font-family: ${fredoka.style.fontFamily};
