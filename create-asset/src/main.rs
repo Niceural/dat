@@ -1,8 +1,10 @@
 extern crate dotenv;
+extern crate mktemp;
+use mktemp::Temp;
 use dotenv::dotenv;
 use std::env;
 use std::process::Command;
-use std::io::{stdin, stdout, Read, Write};
+use std::{fs, io, io::stdin, io::stdout, io::Read, io::Write, fs::File, path::Path};
 #[macro_use]
 extern crate dotenv_codegen;
 use serde_json::{Number, Value};
@@ -12,6 +14,25 @@ fn pause() {
     stdout.write(b"").unwrap();
     stdout.flush().unwrap();
     stdin().read(&mut [0]).unwrap();
+}
+
+fn prepend_file<P: AsRef<Path>>(data: &[u8], file_path: &P) -> io::Result<()> {
+    // Create a temporary file 
+    let mut tmp_path = Temp::new_file()?;
+    // Stop the temp file being automatically deleted when the variable
+    // is dropped, by releasing it.
+    // tmp_path.release();
+    // Open temp file for writing
+    let mut tmp = File::create(&tmp_path)?;
+    // Open source file for reading
+    let mut src = File::open(&file_path)?;
+    // Write the data to prepend
+    tmp.write_all(&data)?;
+    // Copy the rest of the source file
+    io::copy(&mut src, &mut tmp)?;
+    fs::remove_file(&file_path)?;
+    fs::rename(&tmp_path, &file_path)?;
+    Ok(())
 }
 
 fn main() {
@@ -160,6 +181,32 @@ fn main() {
         let text = std::fs::read_to_string(&config_file).unwrap();
         serde_json::from_str::<Value>(&text).unwrap()
     };
-    let nft_address = &config["availableNetworks"]["testnet"]["aliases"][&collection_name]["address"];
-    println!("{}", &nft_address);
+    let nft_address: String = match &config["availableNetworks"]["testnet"]["aliases"][&collection_name]["address"] {
+        Value::String(addr) => addr.clone(),
+        _ => panic!("Could not read address from \"tznft.json\""),
+    };
+    println!("NFT address read from \"tznft.json\": {}", &nft_address);
+    
+    // write address to arduino sketch
+    let mut line_to_write = String::from("byte blockData1 [16] = {\"");
+    line_to_write.push_str(&nft_address[0..16]);
+    line_to_write.push_str("\"};byte blockData2 [16] = {\"");
+    line_to_write.push_str(&nft_address[16..32]);
+    line_to_write.push_str("\"};byte blockData3 [16] = {\"");
+    line_to_write.push_str(&nft_address[32..36]);
+    line_to_write.push_str("------------\"};\n");
+    println!("Line to write to arduino sketch: {}", &line_to_write);
+    let original_file_path = "./arduino/writeRfid/writeRfid.ino";
+    let original_content: String = fs::read_to_string(&original_file_path)
+        .expect("Failed to read arduino sketch");
+        // .parse()
+        // .expect("Failed to parse content");
+    // println!("{}", original_content);
+    let temp_file_path = "./arduino/writeRfid/foo.ino";
+    let mut temp = File::create(&temp_file_path).expect("Failed to create temp file");
+    temp.write(&line_to_write.as_bytes()).expect("Failed to write to file");
+    temp.write(&original_content.as_bytes()).expect("Failed to write to file");
+    fs::remove_file(&original_file_path).expect("Failed to remove file");
+    fs::rename(&temp_file_path, &original_file_path).expect("Failed to rename file");
+
 }

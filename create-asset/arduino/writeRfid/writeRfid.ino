@@ -1,10 +1,11 @@
+byte blockData1 [16] = {"KT1LLsFFR8nRxFsy"};byte blockData2 [16] = {"r1UdP9W1DNuvCv3b"};byte blockData3 [16] = {"Xy8C------------"};
 #include <SPI.h>
 #include <MFRC522.h>
 
 /*Using Hardware SPI of Arduino */
 /*MOSI (11), MISO (12) and SCK (13) are fixed */
 /*You can configure SS and RST Pins*/
-#define SS_PIN 10  /* Slave Select Pin (SDA) */
+#define SS_PIN 10  /* Slave Select Pin */
 #define RST_PIN 7  /* Reset Pin */
 
 /* Create an instance of MFRC522 */
@@ -14,17 +15,13 @@ MFRC522::MIFARE_Key key;
 
 /* Set the block to which we want to write data */
 /* Be aware of Sector Trailer Blocks */
-// int blockNum = 2;
-int addressBlockNum1 = 2;  
-int addressBlockNum2 = 4;
-int addressBlockNum3 = 5;
+int blockNum1 = 1;
+int blockNum2 = 2;
+int blockNum3 = 4;
 
 /* Create an array of 16 Bytes and fill it with data */
 /* This is the actual data which is going to be written into the card */
-/* byte blockData [16] = {"Electronics-Hub-"}; */
-byte addressBlockData1 [16] = {"KT1KgqybKhzqpyS"};
-byte addressBlockData2 [16] = {"Kd9wZPMFoYDBDB2"};
-byte addressBlockData3 [16] = {"4qdiQL---------"};
+// byte blockData1 [16] = {"Electronics-Hub-"};
 
 /* Create another array to read data from Block */
 /* Legthn of buffer should be 2 Bytes more than the size of Block (16 Bytes) */
@@ -78,26 +75,23 @@ void loop()
   Serial.print(F("PICC type: "));
   MFRC522::PICC_Type piccType = mfrc522.PICC_GetType(mfrc522.uid.sak);
   Serial.println(mfrc522.PICC_GetTypeName(piccType));
-
+         
    /* Call 'WriteDataToBlock' function, which will write data to the block */
    Serial.print("\n");
    Serial.println("Writing to Data Block...");
-   //WriteDataToBlock(blockNum, blockData);
-        WriteDataToBlock(addressBlockNum1, addressBlockData1);
-
+   WriteDataToBlock(blockNum1, blockData1);
+   
    /* Read data from the same block */
    Serial.print("\n");
    Serial.println("Reading from Data Block...");
-   //ReadDataFromBlock(blockNum, readBlockData);
-        ReadDataFromBlock(addressBlockNum1, addressBlockData1);
+   ReadDataFromBlock(blockNum1, readBlockData);
    /* If you want to print the full memory dump, uncomment the next line */
-   //mfrc522.PICC_DumpToSerial(&(mfrc522.uid));
-
+   mfrc522.PICC_DumpToSerial(&(mfrc522.uid));
+   
    /* Print the data read from block */
    Serial.print("\n");
    Serial.print("Data in Block:");
-   // Serial.print(blockNum);
-        Serial.print(addressBlockNum1);
+   Serial.print(blockNum1);
    Serial.print(" --> ");
    for (int j=0 ; j<16 ; j++)
    {
